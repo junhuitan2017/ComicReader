@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Read some comic</title>
+        <meta name="description" content="My Manga Reader">
+        <meta author="author" content="Tan Jun Hui">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="manga.css">
+        <script src="manga.js"></script>
+    </head>
+    <body>
+        <div id="main-container">
+            <div id="content-url">
+                <h1>Just a Comic Reader</h1>
+                <span>Contents from <a href="https://xkcd.com/">XKCD</a></span>
+            </div>
+            <div id="sel-container">
+                <span>Go to a specific page: </span>
+                <input id="select-page" type="number">
+                <span>Number of page to display: </span>
+                <select name="num-display" id="display-dropdown">
+                    <option value="1">1</option>
+                    <option value="3" selected>3</option>
+                    <option value="5">5</option>
+                </select>
+                <button id="go-button" onclick="mainFunctions.goClick()">Go!</button>
+            </div>
+            <div id="nav-buttons">
+                <button onclick="mainFunctions.prevClick()">&#60; Prev</button>
+                <button onclick="mainFunctions.randomClick()">Random</button>
+                <button onclick="mainFunctions.nextClick()">Next &#62;</button>
+            </div>
+            <div id="main-display"></div>
+            <div id="nav-buttons">
+                <button onclick="mainFunctions.prevClick()">&#60; Prev</button>
+                <button onclick="mainFunctions.randomClick()">Random</button>
+                <button onclick="mainFunctions.nextClick()">Next &#62;</button>
+            </div>
+        </div>
+        <div id="grey-screen" class="hide" onclick="imgClick('#')">
+            <img id="zoom-img" src="#" alt="Zoomed Manga"/>
+        </div>
+    </body>
+</html>
