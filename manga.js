@@ -36,7 +36,7 @@ const mainFunctions = (function () {
             const midPage = pageUtils.getPage();
             const lastPage = pageUtils.getLatest();
 
-            const mainDisplayElement = document.getElementById("main-display");
+            const mainDisplayElement = document.querySelector("#main-display");
             mainDisplayElement.style.gridTemplateColumns = `${90 / num}% `.repeat(num);
             mainDisplayElement.innerHTML = Array(num).fill(0).map((val, idx) => `<div id="manga${idx + 1}"></div>`).join("");
             Array(num).fill(0).forEach((val, i) => {
@@ -70,7 +70,7 @@ const mainFunctions = (function () {
         },
         // When a preference is submitted (Specific page or number of display)
         goClick: () => {
-            let selectedPage = document.getElementById("select-page").value;
+            let selectedPage = document.querySelector("#select-page").value;
             if (selectedPage != "") {
                 selectedPage = parseInt(selectedPage);
                 if (selectedPage < 1 || selectedPage > pageUtils.getLatest()) {
@@ -81,13 +81,13 @@ const mainFunctions = (function () {
                 }
             }
 
-            const selectedDisplay = parseInt(document.getElementById("display-dropdown").value);
+            const selectedDisplay = parseInt(document.querySelector("#display-dropdown").value);
             if (selectedDisplay != numDisplay) {
                 if (pageUtils.getPage() < selectedDisplay / 2) {
                     pageUtils.setPage(Math.ceil(selectedDisplay / 2));
                 }
                 mainFunctions.setDisplay(selectedDisplay);
-                document.getElementById("display-dropdown").innerHTML = `
+                document.querySelector("#display-dropdown").innerHTML = `
                 <option value="1" ${mainFunctions.isSelected(1) ? "selected" : ""}>1</option>
                 <option value="3" ${mainFunctions.isSelected(3) ? "selected" : ""}>3</option>
                 <option value="5" ${mainFunctions.isSelected(5) ? "selected" : ""}>5</option>
@@ -99,8 +99,8 @@ const mainFunctions = (function () {
 
 // Zoom on comic when clicked
 function imgClick(img) {
-    document.getElementById(`grey-screen`).classList.toggle("hide");
-    document.getElementById(`zoom-img`).src = img;
+    document.querySelector(`#grey-screen`).classList.toggle("hide");
+    document.querySelector(`#zoom-img`).src = img;
 }
 
 /*
@@ -131,7 +131,7 @@ function displayManga(id, page) {
             comicDivParts[2].innerHTML = result.num;
         })
     })
-    document.getElementById(id).innerHTML = `
+    document.querySelector(`#${id}`).innerHTML = `
         <h1>Loading...</h1>
         <img src="https://cdn.dribbble.com/users/712682/screenshots/11956378/media/50c8e606db69f492200555d72b34f308.gif"/>
         <h3>-</h3>
