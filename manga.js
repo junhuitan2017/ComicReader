@@ -70,7 +70,7 @@ const mainFunctions = (function () {
         },
         // When a preference is submitted (Specific page or number of display)
         goClick: () => {
-            const selectedPage = document.getElementById("select-page").value;
+            let selectedPage = document.getElementById("select-page").value;
             if (selectedPage != "") {
                 selectedPage = parseInt(selectedPage);
                 if (selectedPage < 1 || selectedPage > pageUtils.getLatest()) {
