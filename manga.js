@@ -41,7 +41,7 @@ const mainFunctions = (function () {
             mainDisplayElement.innerHTML = Array(num).fill(0).map((val, idx) => `<div id="manga${idx + 1}"></div>`).join("");
             Array(num).fill(0).forEach((val, i) => {
                 const idx = i + 1;
-                const pageNo = midPage + idx - (Math.ceil(num / 2));
+                let pageNo = midPage + idx - (Math.ceil(num / 2));
                 if (pageNo < 1) {
                     pageNo = lastPage + pageNo;
                 } else if (pageNo > lastPage) {
