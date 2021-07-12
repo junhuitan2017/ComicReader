@@ -123,16 +123,18 @@ Example Result
 function displayManga(id, page) {
     fetch(`https://xkcd.vercel.app/?comic=${page}`).then((res) => {
         res.json().then((result) => {
-            document.getElementById(id).innerHTML = `
-            <h1>${result.safe_title}</h1>
-            <img id="manga-${result.num}" src="${result.img}" onclick="imgClick('${result.img}')"/>
-            <h3>${result.num}</h3>
-            `;
+            const comicDivParts = document.querySelector(`#${id}`).children;
+            comicDivParts[0].innerHTML = result.safe_title;
+            comicDivParts[1].id = `manga-${result.num}`;
+            comicDivParts[1].src = result.img;
+            comicDivParts[1].addEventListener('click', () => {imgClick(result.img)});
+            comicDivParts[2].innerHTML = result.num;
         })
     })
     document.getElementById(id).innerHTML = `
         <h1>Loading...</h1>
         <img src="https://cdn.dribbble.com/users/712682/screenshots/11956378/media/50c8e606db69f492200555d72b34f308.gif"/>
+        <h3>-</h3>
     `
 }
 
