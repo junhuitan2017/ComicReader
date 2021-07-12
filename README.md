@@ -8,6 +8,8 @@ It is using HTML, CSS and plain Javascript
 
 Just open the HTML file and you are in!
 
+Alternatively, use [this link](https://raw.githack.com/junhuitan2017/ComicReader/main/manga.html) to view the site directly!
+
 ## Usage
 
 There is a input to navigate to sepcific page and a dropdown to specify the number of comics to display at once
