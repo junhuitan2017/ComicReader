@@ -15,10 +15,6 @@ button {
     font-weight: bold;
 }
 
-.stop-scroll {
-    overflow-y: hidden;
-}
-
 .hide {
     display: none;
 }
