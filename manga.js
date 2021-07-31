@@ -83,30 +83,20 @@ const mainFunctions = (function () {
             return selected === numDisplay;
         },
         // When a preference is submitted (Specific page or number of display)
-        goClick: () => {
-            let selectedPage = document.querySelector("#select-page").value; // The page number that the user inputted
-            if (selectedPage != "") {
-                selectedPage = parseInt(selectedPage); // Convert user input into type number
-                if (selectedPage < 1 || selectedPage > pageUtils.getLatest()) {
-                    // When user input page that is out of range
-                    alert(`Please select a number between 1 and ${pageUtils.getLatest()}`);
-                } else {
-                    // Update the UI
-                    pageUtils.setPage(selectedPage);
-                    mainFunctions.setDisplay(numDisplay);
-                }
+        goClick: (event) => {
+            event.preventDefault();
+            const pageInput = document.querySelector("#select-page"); // The input field element
+            let pageValue = pageInput.value;                          // The page number that the user inputted
+            // Only navigate when user input something
+            if (pageValue != "") {
+                navigateToPage(parseInt(pageValue), numDisplay);
+                pageInput.value = ""; // Reset the field after submitting
             }
 
             const selectedDisplay = parseInt(document.querySelector("#display-dropdown").value); // The selected option of the dropdown
             // Only update when the number of display is changed
             if (selectedDisplay != numDisplay) {
-                // Eg. When the current page displayed is [1, 2, 3], then user change to displaying 5
-                // The page will display [1, 2, 3, 4, 5] instead of [latest page, 1, 2, 3, 4]
-                if (pageUtils.getPage() < selectedDisplay / 2) {
-                    pageUtils.setPage(Math.ceil(selectedDisplay / 2));
-                }
-                // Update the UI
-                mainFunctions.setDisplay(selectedDisplay);
+                changeNumDisplay(selectedDisplay);
                 // Update the dropdown option
                 document.querySelector("#display-dropdown").innerHTML = `
                 <option value="1" ${mainFunctions.isSelected(1) ? "selected" : ""}>1</option>
@@ -117,6 +107,29 @@ const mainFunctions = (function () {
         }
     };
 })();
+
+// Navigate to specific page and update the UI
+function navigateToPage(selectedPage, numDisplay) {
+    if (selectedPage < 1 || selectedPage > pageUtils.getLatest()) {
+        // When user input page that is out of range, show error message
+        alert(`Please select a number between 1 and ${pageUtils.getLatest()}`);
+    } else {
+        // Update the UI
+        pageUtils.setPage(selectedPage);
+        mainFunctions.setDisplay(numDisplay);
+    }
+}
+
+// Change the number of comics displayed and update the UI
+function changeNumDisplay(selectedDisplay) {
+    // Eg. When the current page displayed is [1, 2, 3], then user change to displaying 5
+    // The page will display [1, 2, 3, 4, 5] instead of [latest page, 1, 2, 3, 4]
+    if (pageUtils.getPage() < selectedDisplay / 2) {
+        pageUtils.setPage(Math.ceil(selectedDisplay / 2));
+    }
+    // Update the UI
+    mainFunctions.setDisplay(selectedDisplay);
+}
 
 // Zoom on comic when clicked
 function imgClick(img) {
@@ -149,7 +162,7 @@ function displayManga(id, page) {
             comicDivParts[0].innerHTML = result.safe_title;
             comicDivParts[1].id = `manga-${result.num}`;
             comicDivParts[1].src = result.img;
-            comicDivParts[1].addEventListener('click', () => {imgClick(result.img)});
+            comicDivParts[1].addEventListener('click', () => { imgClick(result.img) });
             comicDivParts[2].innerHTML = result.num;
         })
     });
@@ -162,7 +175,8 @@ function displayManga(id, page) {
     `
 }
 
-// Initialise page with 3 comic display when loaded
+// Run when document is loaded
 window.onload = () => {
-    mainFunctions.setDisplay(3);
+    mainFunctions.setDisplay(3); // Initialise page with 3 comic display
+    document.querySelector("#sel-container").addEventListener("submit", mainFunctions.goClick);
 }
