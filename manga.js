@@ -43,8 +43,8 @@ const mainFunctions = (function () {
             const midPage = pageUtils.getPage();
             const lastPage = pageUtils.getLatest();
 
-            const mainDisplayElement = document.querySelector("#main-display");         // Div element that contains the comics
-            mainDisplayElement.style.gridTemplateColumns = `${90 / num}% `.repeat(num); // To space the comics evenly within the div
+            const mainDisplayElement = document.querySelector("#main-display"); // Div element that contains the comics
+            updateMainDisplayClass(num);
             // Create the individual divs for the comic content first
             mainDisplayElement.innerHTML = Array(num).fill(0).map((val, idx) => `<div id="manga${idx + 1}"></div>`).join("");
             // Determine the page number for each comic
@@ -107,6 +107,14 @@ const mainFunctions = (function () {
         }
     };
 })();
+
+function updateMainDisplayClass(numDisplay) {
+    const mainDisplayElement = document.querySelector("#main-display");
+    // Remove all display class first
+    mainDisplayElement.classList.remove("display1", "display3", "display5");
+    // Add the correct class
+    mainDisplayElement.classList.add(`display${numDisplay}`);
+}
 
 // Navigate to specific page and update the UI
 function navigateToPage(selectedPage, numDisplay) {
