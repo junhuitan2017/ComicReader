@@ -139,10 +139,19 @@ function changeNumDisplay(selectedDisplay) {
     mainFunctions.setDisplay(selectedDisplay);
 }
 
-// Zoom on comic when clicked
+// Make comic pop up when clicked
 function imgClick(img) {
+    window.event.stopPropagation();
     document.querySelector(`#grey-screen`).classList.toggle("hide");
     document.querySelector(`#zoom-img`).src = img;
+}
+
+// Zoom comic when img is clicked
+function toggleImgZoom(e) {
+    e.stopPropagation(); // Prevent parent onclick function from running
+    const elem = document.querySelector("#zoom-img");
+    elem.classList.toggle("img-popup");
+    elem.classList.toggle("img-popup-zoom");
 }
 
 /*
