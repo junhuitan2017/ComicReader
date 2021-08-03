@@ -3,14 +3,13 @@ const pageUtils = (function () {
     let currPage = 2;       // The middle page of current set of page eg. [2, [3], 4] or [1, 2, [3], 4, 5]
     let latestPage = 100;   // The latest page from xkcd
 
-    // Updating latest page number
-    fetch("https://xkcd.vercel.app/?comic=latest").then((res) => {
-        res.json().then((result) => {
-            latestPage = result.num;
-        });
-    });
-
     return {
+        init: async () => {
+            // Updating latest page number
+            const res = await fetch("https://xkcd.vercel.app/?comic=latest");
+            const result = await res.json();
+            latestPage = result.num;
+        },
         getPage: () => currPage,
         getLatest: () => latestPage,
         changePage: (numPageChange) => {
@@ -180,7 +179,7 @@ function displayManga(id, page) {
             comicDivParts[1].id = `manga-${result.num}`;
             comicDivParts[1].src = result.img;
             comicDivParts[1].addEventListener('click', () => { imgClick(result.img) });
-            comicDivParts[2].innerHTML = result.num;
+            comicDivParts[2].innerHTML = `${result.num} of ${pageUtils.getLatest()}`;
         })
     });
 
@@ -193,7 +192,8 @@ function displayManga(id, page) {
 }
 
 // Run when document is loaded
-window.onload = () => {
+window.onload = async () => {
+    await pageUtils.init();      // Wait for page data to finish laoding
     mainFunctions.setDisplay(3); // Initialise page with 3 comic display
     document.querySelector("#sel-container").addEventListener("submit", mainFunctions.goClick);
 }
