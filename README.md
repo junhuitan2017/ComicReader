@@ -8,7 +8,7 @@ It is using HTML, CSS and plain Javascript
 
 Just open the HTML file and you are in!
 
-Alternatively, use [this link](https://raw.githack.com/junhuitan2017/ComicReader/main/manga.html) to view the site directly!
+Alternatively, use [this link](https://junhuitan2017.github.io/ComicReader/manga.html) to view the site directly!
 
 ## Usage
 
